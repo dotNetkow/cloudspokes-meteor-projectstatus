@@ -1,0 +1,21 @@
+<head>
+  <title>Project Status - Cloudspokes</title>
+</head>
+
+<body>
+  {{> projectList}}
+</body>
+
+<template name="projectList">
+  {{#each ProjectArray}}
+    <div class="project">
+        <h2>{{Title}}</h2>
+        <ul>
+            <li>Original Completion Date: </li>
+            <li>Updated Completion Date: </li>
+            <li>Status: {{Status}}</li>
+            <li>Notes:</li>
+        </ul>
+    </div>
+  {{/each}}
+</template>
