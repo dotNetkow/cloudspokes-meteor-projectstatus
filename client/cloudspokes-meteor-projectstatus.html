@@ -7,15 +7,30 @@
 </body>
 
 <template name="projectList">
-  {{#each ProjectArray}}
-    <div class="project">
-        <h2>{{Title}}</h2>
-        <ul>
-            <li>Original Completion Date: </li>
-            <li>Updated Completion Date: </li>
-            <li>Status: {{Status}}</li>
-            <li>Notes:</li>
-        </ul>
-    </div>
-  {{/each}}
+    <input id="" type="button" value="New Project" />
+    {{#each ProjectArray}}
+        <div class="project">
+            {{#if editing}}
+                <div class="edit">
+                    <h2><input id="pTitle" type="text" value="{{Title}}" /></h2>
+                    <ul>
+                        <li>Original Completion Date: <input id="pComDateOrig" type="text" value="{{DateCompleteOriginal}}" /></li>
+                        <li>Updated Completion Date: <input id="pComDateCur" type="text" value="{{DateCompleteCurrent}}" /></li>
+                        <li>Status: <input id="pStatus" type="text" value="{{Status}}" /></li>
+                        <li>Notes: <input id="pNotes" type="text" value="{{Notes}}" /></li>
+                    </ul>
+                </div>
+            {{else}}
+                <div class="display">
+                    <h2>{{Title}}</h2>
+                    <ul>
+                        <li>Original Completion Date: {{DateCompleteOriginal}}</li>
+                        <li>Updated Completion Date: {{DateCompleteCurrent}}</li>
+                        <li>Status: {{Status}}</li>
+                        <li>Notes: {{Notes}}</li>
+                    </ul>
+                </div>
+            {{/if}}
+        </div>
+    {{/each}}
 </template>
