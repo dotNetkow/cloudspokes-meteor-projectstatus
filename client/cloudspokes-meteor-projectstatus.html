@@ -7,22 +7,12 @@
 </body>
 
 <template name="projectList">
-    <input id="" type="button" value="New Project" />
+    <input id="newProject" type="button" value="New Project" />
     {{#each ProjectArray}}
         <div class="project">
-            {{#if editing}}
+            {{#if editingTitle}}
                 <div class="edit">
                     <h2><input id="pTitle" type="text" value="{{Title}}" /></h2>
-                    <ul>
-                        <li>Original Completion Date: <input id="pComDateOrig" type="text" value="{{DateCompleteOriginal}}" /></li>
-                        <li>Updated Completion Date: <input id="pComDateCur" type="text" value="{{DateCompleteCurrent}}" /></li>
-                        <li>Status: <input id="pStatus" type="text" value="{{Status}}" /></li>
-                        <li>Notes: <input id="pNotes" type="text" value="{{Notes}}" /></li>
-                    </ul>
-                </div>
-            {{else}}
-                <div class="display">
-                    <h2>{{Title}}</h2>
                     <ul>
                         <li>Original Completion Date: {{DateCompleteOriginal}}</li>
                         <li>Updated Completion Date: {{DateCompleteCurrent}}</li>
@@ -30,6 +20,28 @@
                         <li>Notes: {{Notes}}</li>
                     </ul>
                 </div>
+            {{else}}
+                {{#if editingStatus}}
+                <div class="edit">
+                    <h2>{{Title}}</h2>
+                    <ul>
+                        <li>Original Completion Date: {{DateCompleteOriginal}}</li>
+                        <li>Updated Completion Date: {{DateCompleteCurrent}}</li>
+                        <li>Status: <input id="pStatus" type="text" value="{{Status}}" /></li>
+                        <li>Notes: {{Notes}}</li>
+                    </ul>
+                </div>
+                {{else}}
+                <div class="display">
+                    <h2 class="pTitle">{{Title}}</h2>
+                    <ul>
+                        <li>Original Completion Date: {{DateCompleteOriginal}}</li>
+                        <li>Updated Completion Date: {{DateCompleteCurrent}}</li>
+                        <li class="pStatus">Status: {{Status}}</li>
+                        <li>Notes: {{Notes}}</li>
+                    </ul>
+                </div>
+                {{/if}}
             {{/if}}
         </div>
     {{/each}}
