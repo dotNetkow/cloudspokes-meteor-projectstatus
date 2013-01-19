@@ -1,1 +1,13 @@
 /* CSS declarations go here */
+.credits {
+    position: absolute;
+    bottom:0;
+}
+
+ul {
+    font-weight: bold;
+}
+
+.edit {
+    
+}
