@@ -10,12 +10,13 @@
 
 <template name="projectList">
     <input id="newProject" type="button" value="New Project" onclick="createNewProject()" />
+
     {{#if hasProjects}}
     {{#each ProjectArray}}
         <div class="project">
             {{#if editingTitle}}
                 <div class="edit">
-                    <h2><input id="pTitle" type="text" value="{{Title}}" /></h2>
+                    <h2><input id="pTitle" class="pTitle" type="text" value="{{Title}}" /></h2>
                     <ul>
                         <li>Original Completion Date: {{DateCompleteOrig}}</li>
                         <li>Updated Completion Date: {{DateCompleteCur}}</li>
@@ -25,7 +26,8 @@
                 </div>
             {{else}} {{#if editingStatus}}
                 <div class="edit">
-                    <h2>{{Title}}</h2>
+                    <label class="pTitle">{{Title}}</label>
+                    <div class="removeProject"></div>
                     <ul>
                         <li>Original Completion Date: {{DateCompleteOrig}}</li>
                         <li>Updated Completion Date: {{DateCompleteCur}}</li>
@@ -35,7 +37,8 @@
                 </div>
             {{else}} {{#if editingDateOrig}}
                 <div class="edit">
-                    <h2>{{Title}}</h2>
+                    <label class="pTitle">{{Title}}</label>
+                    <div class="removeProject"></div>
                     <ul>
                         <li>Original Completion Date: <input id="pDateOrig" type="text" value="{{DateCompleteOrig}}" /></li>
                         <li>Updated Completion Date: {{DateCompleteCur}}</li>
@@ -45,7 +48,8 @@
                 </div>
             {{else}} {{#if editingDateCur}}
                 <div class="edit">
-                    <h2>{{Title}}</h2>
+                    <label class="pTitle">{{Title}}</label>
+                    <div class="removeProject"></div>
                     <ul>
                         <li>Original Completion Date: {{DateCompleteOrig}}</li>
                         <li>Updated Completion Date: <input id="pDateCur" type="text" value="{{DateCompleteCur}}" /></li>
@@ -55,7 +59,8 @@
                 </div>
             {{else}} {{#if editingNotes}}
                 <div class="edit">
-                    <h2>{{Title}}</h2>
+                    <label class="pTitle">{{Title}}</label>
+                    <div class="removeProject"></div>
                     <ul>
                         <li>Original Completion Date: {{DateCompleteOrig}}</li>
                         <li>Updated Completion Date: {{DateCompleteCur}}</li>
@@ -65,22 +70,26 @@
                 </div>
             {{else}}
             <div class="display">
-                <h2 class="pTitle">{{Title}}</h2>
+                <label class="pTitle">{{Title}}</label>
+                <div class="removeProject"></div>
                 <ul>
                     <li class="pDateOrig">Original Completion Date: {{DateCompleteOrig}}</li>
                     <li class="pDateCur">Updated Completion Date: {{DateCompleteCur}}</li>
-                    <li class="pStatus">Status: {{Status}}</li>
+                    {{> projectStatus}}
                     <li class="pNotes">Notes: {{Notes}}</li>
                 </ul>
             </div>
-            {{/if}}
-            {{/if}}
-            {{/if}}
-            {{/if}}
+            {{/if}} {{/if}} {{/if}} {{/if}}
             {{/if}}
         </div>
     {{/each}}
     {{else}}
         <p>Click the "New Project" button to begin!</p>
+    {{/if}}
+</template>
+
+<template name="projectStatus">
+    {{#if onTrack}}
+        <li class="pStatus" style="color: red">Status: {{Status}}</li>
     {{/if}}
 </template>

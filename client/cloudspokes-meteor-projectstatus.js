@@ -44,11 +44,15 @@ var activateInput = function (input) {
     input.select();
 };
 
-
 /* END Helpers for in-place editing */
 
 Template.projectList.hasProjects = function () {
     return Projects.find().count() > 0;
+};
+
+Template.projectStatus.onTrack = function (Status) {
+    console.log(Status);
+    return (Status === "On Track") ? true : false;
 };
 
 Template.projectList.ProjectArray = function () {
@@ -87,6 +91,9 @@ Template.projectList.events({
         Session.set('editing_notes', this._id);
         Meteor.flush(); // update DOM before focus
         activateInput(tmpl.find("#pNotes"));
+    },
+    'click .removeProject': function () {
+        Projects.remove(this._id);
     }
 });
 
@@ -130,6 +137,11 @@ Template.projectList.events(okCancelEvents(
       ok: function (value) {
           Projects.update(this._id, { $set: { Status: value } });
           Session.set('editing_status', null);
+
+          Meteor.flush();
+          $('.pStatus:contains("Behind")').css('color', '#f2cb4c');
+          $('.pStatus:contains("On Track")').css('color', 'green');
+
       },
       cancel: function () { Session.set('editing_status', null); }
   })
@@ -150,4 +162,14 @@ function createNewProject() {
     Projects.insert({
         Title: "A New Project", DateCompleteOrig: "1/1/2013", DateCompleteCur: "1/1/2013", Status: "On Track", Notes: "New note."
     });
-};
+}
+
+if (Meteor.isClient) {
+    Meteor.startup(function () {
+        //console.log($('.pStatus:contains("Behind")'));  //.css('color', 'red');
+    });
+}
+
+$(document).ready(function () {
+    
+});

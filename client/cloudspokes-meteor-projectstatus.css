@@ -11,3 +11,26 @@ ul {
 .edit {
     
 }
+
+.project {
+    border-top: 1px solid #1053a5;
+}
+
+.pTitle {
+    font-size: x-large;
+    padding-left: 5px;
+    font-style:italic;
+}
+
+.display .removeProject {
+    cursor: pointer;
+    float: left;
+    height: 20px;
+    width: 20px;
+    margin-top: 5px;
+}
+
+
+.display:hover .removeProject {
+    background: url('/destroy.png') no-repeat 0 0;
+}
