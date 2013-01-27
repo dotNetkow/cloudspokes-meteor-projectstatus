@@ -75,7 +75,7 @@
                 <ul>
                     <li class="pDateOrig">Original Completion Date: {{DateCompleteOrig}}</li>
                     <li class="pDateCur">Updated Completion Date: {{DateCompleteCur}}</li>
-                    {{> projectStatus}}
+                    <li>Status: <span class="pStatus" style="color:{{getStatusColor Status}}">{{Status}}</span></li>
                     <li class="pNotes">Notes: {{Notes}}</li>
                 </ul>
             </div>
@@ -85,11 +85,5 @@
     {{/each}}
     {{else}}
         <p>Click the "New Project" button to begin!</p>
-    {{/if}}
-</template>
-
-<template name="projectStatus">
-    {{#if onTrack}}
-        <li class="pStatus" style="color: red">Status: {{Status}}</li>
     {{/if}}
 </template>

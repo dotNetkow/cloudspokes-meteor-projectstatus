@@ -50,11 +50,6 @@ Template.projectList.hasProjects = function () {
     return Projects.find().count() > 0;
 };
 
-Template.projectStatus.onTrack = function (Status) {
-    console.log(Status);
-    return (Status === "On Track") ? true : false;
-};
-
 Template.projectList.ProjectArray = function () {
     return Projects.find({}, { sort: { Title: 1 } });
 };
@@ -170,6 +165,16 @@ if (Meteor.isClient) {
     });
 }
 
-$(document).ready(function () {
-    
+// Handlebars extension methods
+Handlebars.registerHelper('getStatusColor', function (status) {
+    switch (status) {
+        case "On Track":
+            { return 'green'; } break;
+        case "Behind":
+            { return 'orange'; } break;
+        case "Delayed":
+            { return 'red'; } break;
+        default:
+            { return 'black'; } break;
+    }
 });
