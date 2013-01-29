@@ -3,14 +3,16 @@
 </head>
 
 <body>
-  {{> projectList}}
+    {{> statusFilter }}
 
-  <p class="credits">Created by <a href="http://github.com/dotNetkow" target="_blank">dotNetkow</a></p>
+    
+
+    {{> projectList}}
+
+    <p class="credits">Created by <a href="http://github.com/dotNetkow" target="_blank">dotNetkow</a></p>
 </body>
 
 <template name="projectList">
-    <input id="newProject" type="button" value="New Project" onclick="createNewProject()" />
-
     {{#if hasProjects}}
     {{#each ProjectArray}}
         <div class="project">
@@ -86,4 +88,16 @@
     {{else}}
         <p>Click the "New Project" button to begin!</p>
     {{/if}}
+</template>
+
+
+<template name="statusFilter">
+    <div id="status-filter">
+        <div class="label">Show Status:
+        {{#each statuses}}
+            <input class="statType" type="radio" name="statusGroup" value="{{Name}}" {{getChecked Name}}>{{Name}}</>
+        {{/each}}
+        <input id="newProject" style="margin-left:25px" type="button" value="New Project" onclick="createNewProject()" />
+        </div>
+    </div>
 </template>

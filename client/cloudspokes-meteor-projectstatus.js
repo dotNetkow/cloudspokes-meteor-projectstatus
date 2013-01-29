@@ -1,14 +1,17 @@
 // Client side javascript
 Projects = new Meteor.Collection("projects");
+StatusTypes = new Meteor.Collection("statusTypes");
 
 Session.set('editing_title', null);
 Session.set('editing_dateOrig', null);
 Session.set('editing_dateCur', null);
 Session.set('editing_status', null);
 Session.set('editing_notes', null);
+Session.set('selected_status', null);
 
 // Subscribe to 'projects' collection on startup.
 Meteor.subscribe('projects');
+Meteor.subscribe('statusTypes');
 
 /* Helpers for in-place editing */
 
@@ -41,7 +44,7 @@ var okCancelEvents = function (selector, callbacks) {
 
 var activateInput = function (input) {
     input.focus();
-    input.select();
+    input.select(); 
 };
 
 /* END Helpers for in-place editing */
@@ -51,8 +54,20 @@ Template.projectList.hasProjects = function () {
 };
 
 Template.projectList.ProjectArray = function () {
-    return Projects.find({}, { sort: { Title: 1 } });
+    var selectedStatus = Session.get('selected_status');
+    if (!selectedStatus || selectedStatus === "All") {
+        return Projects.find({}, { sort: { Title: 1 } });
+    }
+    else {
+        var selectedProjects = { Status: selectedStatus };
+        return Projects.find(selectedProjects, { sort: { Title: 1 } });
+    }
 };
+
+function change() {
+    var selectedProjects = { Status: "Behind" };
+    Template.projectList.ProjectArray = Projects.find(selectedProjects, { sort: { Title: 1 } });
+}
 
 Template.projectList.editingTitle = function () { return Session.equals('editing_title', this._id); };
 Template.projectList.editingDateOrig = function () { return Session.equals('editing_dateOrig', this._id); };
@@ -132,11 +147,6 @@ Template.projectList.events(okCancelEvents(
       ok: function (value) {
           Projects.update(this._id, { $set: { Status: value } });
           Session.set('editing_status', null);
-
-          Meteor.flush();
-          $('.pStatus:contains("Behind")').css('color', '#f2cb4c');
-          $('.pStatus:contains("On Track")').css('color', 'green');
-
       },
       cancel: function () { Session.set('editing_status', null); }
   })
@@ -153,19 +163,29 @@ Template.projectList.events(okCancelEvents(
   })
 );
 
+
+// Status Filter
+Template.statusFilter.statuses = function () {
+    return StatusTypes.find({}, { sort: { Name: 1 } });
+};
+
+Template.statusFilter.events({
+    'mousedown .statType': function () {
+        Session.set('selected_status', this.Name);
+    }
+});
+
 function createNewProject() {
     Projects.insert({
         Title: "A New Project", DateCompleteOrig: "1/1/2013", DateCompleteCur: "1/1/2013", Status: "On Track", Notes: "New note."
     });
 }
 
-if (Meteor.isClient) {
-    Meteor.startup(function () {
-        //console.log($('.pStatus:contains("Behind")'));  //.css('color', 'red');
-    });
-}
-
 // Handlebars extension methods
+Handlebars.registerHelper('getChecked', function (Name) {
+    return (Name === "All" ? "checked" : "");
+});
+
 Handlebars.registerHelper('getStatusColor', function (status) {
     switch (status) {
         case "On Track":
