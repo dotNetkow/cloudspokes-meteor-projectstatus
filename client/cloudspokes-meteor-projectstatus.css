@@ -1,4 +1,17 @@
 /* CSS declarations go here */
+body {
+    background-color: darkgray;
+    font-family: serif;
+}
+
+h2 {
+    margin-bottom: -10px;
+}
+
+ul {
+    margin-top: 5px;
+}
+
 .credits {
     position: absolute;
     bottom:0;
@@ -33,4 +46,9 @@ ul {
 
 .display:hover .removeProject {
     background: url('/destroy.png') no-repeat 0 0;
+}
+
+.statType
+{
+    transition-delay: 2s;
 }

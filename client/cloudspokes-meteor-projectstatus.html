@@ -1,15 +1,19 @@
 <head>
-  <title>Project Status by dotNetkow</title>
+  <title>Cloud Project Status</title>
 </head>
 
 <body>
-    {{> statusFilter }}
+    <h2>Cloud Project Status</h2>
+    <p>Collaborate with team members in real time to track your Projects. Double click any item to edit.</p>
 
-    
+    {{> statusFilter }}
 
     {{> projectList}}
 
-    <p class="credits">Created by <a href="http://github.com/dotNetkow" target="_blank">dotNetkow</a></p>
+    <a href="https://github.com/dotNetkow/cloudspokes-meteor-projectstatus">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub">
+    </a>
+    <p class="credits">Created by <a href="http://github.com/dotNetkow" target="_blank">dotNetkow</a>, Jan 2013.</p>
 </body>
 
 <template name="projectList">
